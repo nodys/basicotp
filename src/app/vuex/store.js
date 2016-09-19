@@ -3,22 +3,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as getters from './getters.js'
-import * as mutations from './mutations.js'
 import * as actions from './actions.js'
+import mutations from './mutations.js'
 
 Vue.use(Vuex)
 
 const state = {
-  keys: [
-    {
-      key: 'mkklvoj24eumpdgesokxrfprwl2ezbyl',
-      label: 'Foobar'
-    },
-    {
-      key: 'mkklvoj24eumpdgesokxrfprwl2ezbya',
-      label: 'Another'
-    }
-  ]
+  timeout: 1,
+  keys: []
 }
 
 const store = new Vuex.Store({
@@ -37,7 +29,7 @@ if (module.hot) {
     store.hotUpdate({
       getters: require('./getters'),
       actions: require('./actions'),
-      mutations: require('./mutations')
+      mutations: require('./mutations').default
     })
   })
 }

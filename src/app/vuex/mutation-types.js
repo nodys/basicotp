@@ -1,1 +1,6 @@
 export const ADD_KEY = 'ADD_KEY'
+export const UPDATE_ALL_KEYS = 'UPDATE_ALL_KEYS'
+export const UPDATE_CODES = 'UPDATE_CODES'
+export const UPDATE_TIMEOUT = 'UPDATE_TIMEOUT'
+export const UPDATE_KEY = 'UPDATE_KEY'
+export const DELETE_KEY = 'DELETE_KEY'

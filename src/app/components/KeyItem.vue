@@ -1,68 +1,68 @@
 <template lang="html">
-  <div class="item" :class="classes">
-    <div class="label">{{label}}</div>
-    <div class="code">{{code}}</div>
-    <div class="timeout" :style="timeout"></div>
+  <div class="nv-key-item item">
+    <div class="flex">
+      <div class="label">
+        <input class="label-input" type="text" v-model="label" @input="updateLabel">
+      </div>
+      <div class="code">{{item.code}}</div>
+      <!-- <div class="key">{{item.key}}</div> -->
+    </div>
+    <div class="remove-button" @click="handleRemove">
+      ✕
+    </div>
   </div>
 </template>
 <script>
-import notp from 'notp'
-import b32 from 'thirty-two'
-
+import { mapActions } from 'vuex'
 export default {
   props: ['item'],
   data () {
-    return {
-      code: '301365',
-      timeout: {
-        width: '50%'
-      },
-      classes: {
-        outoftime: true
-      }
-    }
+    return { }
   },
   computed: {
     label () {
       return this.item.label
     }
   },
-  created () {
-    this.intervalTimeout = setInterval(() => {
-      let seconds = (new Date()).getSeconds()
-      let progress = 100 - (seconds % 30 * 100 / 30)
-      this.timeout = Object.assign({}, this.timeout, { width: progress + '%' })
-      this.classes.outoftime = seconds % 30 > 25
-      this.updateCode()
-    }, 100)
-  },
-  destroyed () {
-    clearInterval(this.intervalTimeout)
-  },
   methods: {
-    updateCode () {
-      // let raw = b32.decode(this.item.key.replace(/\s+/g, ''))
-      // let code = notp.totp.gen(raw, {})
-      // this.code = code
+    ...mapActions(['deleteKey']),
+    updateLabel (event) {
+      const label = event.target.value.trim()
+      this.$store.dispatch('updateKey', { key: this.item.key, label })
+    },
+    handleRemove (event) {
+      this.deleteKey(this.item)
     }
-  },
-  components: {},
-  watch: {
-    // key (key) {
-    //   console.log('key change', key)
-    //   this.updateCode()
-    // }
   }
 }
 </script>
 <style lang="css" scoped>
 
 .item {
+  display: flex;
+  flex-direction: horizontal;
+  align-items: center;
+  padding: .5rem;
+}
 
+.item > .flex {
+  flex-grow: 1;
 }
 
 .label {
   text-align: center;
+}
+
+.label-input {
+  text-align: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  background: none;
+  border: 0;
+  outline: none;
+  font-family: inherit;
 }
 
 .code {
@@ -75,25 +75,27 @@ export default {
 
 .key {
   text-align: center;
-  font-family: monospace;
-  font-size: 0.8rem;
+  font-family: Monaco, monospace;
+  font-size: 0.7rem;
   display: block;
   width: 100%;
   box-sizing: border-box;
-}
-
-.timeout {
-  background-color: #008abe;
-  height: 5px;
-  transition: background-color 1s ease-in-out;
-}
-
-.item .timeout {
-  background-color: #be0000;
-}
-
-.item .code {
   color: #999;
+}
+
+.remove-button {
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: .5rem;
+  font-size: 1.5rem;
+  color: #ccc;
+  text-align: center;
+  border-radius: 2px;
+  transition: color 200ms ease-out;
+}
+
+.remove-button:hover {
+  color: #000;
 }
 
 </style>
