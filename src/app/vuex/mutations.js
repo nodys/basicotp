@@ -10,7 +10,9 @@ export default {
     if (state.keys.find(k => k.key === newKey.key)) {
       return
     } else {
-      state.keys.push(newKey)
+      state.keys.push(Object.assign({}, {
+        label: 'no name'
+      }, payload))
     }
   },
 

@@ -5,7 +5,7 @@ import * as utils from '../api/utils.js'
 let timeRunnerInterval = null
 
 export const loadKeys = ({ commit, state }) => {
-  api.loadKeys().then((keys) => {
+  return api.loadKeys().then((keys) => {
     commit(Mut.UPDATE_ALL_KEYS, { keys })
   })
   .catch((error) => {
@@ -15,34 +15,39 @@ export const loadKeys = ({ commit, state }) => {
 }
 
 export const saveKeys = ({ commit, state }) => {
-  api.saveKeys([...state.keys])
+  return api.saveKeys([...state.keys])
   .catch((error) => {
     // TODO: Display error message...
     console.error(error)
   })
 }
 
-export const addKey = ({ commit, state }, payload) => {
+export const addKey = (store, payload) => {
   let label = payload.label || 'no name'
   let key = utils.cleanKey(payload.key)
-  commit(Mut.ADD_KEY, {
+  let code = utils.getCode(key)
+  store.commit(Mut.ADD_KEY, {
     label,
-    key
+    key,
+    code
   })
+  return saveKeys(store)
 }
 
-export const updateKey = ({ commit, state }, payload) => {
-  let item = state.keys.find(key => key.key === payload.key)
+export const updateKey = (store, payload) => {
+  let item = store.state.keys.find(key => key.key === payload.key)
   if (!item) { return }
-  commit(Mut.UPDATE_KEY, { item, value: payload })
+  store.commit(Mut.UPDATE_KEY, { item, value: payload })
+  return saveKeys(store)
 }
 
-export const deleteKey = ({ commit, state }, payload) => {
-  let item = state.keys.find(key => key.key === payload.key)
+export const deleteKey = (store, payload) => {
+  let item = store.state.keys.find(key => key.key === payload.key)
   if (!item) { return }
-  if (confirm('Do you really want to remove the key ' + item.label + '?')) {
-    commit(Mut.DELETE_KEY, { key: item.key })
+  if (window.confirm('Do you really want to remove the key "' + item.label + '"?')) {
+    store.commit(Mut.DELETE_KEY, { key: item.key })
   }
+  return saveKeys(store)
 }
 
 export const updateCodes = ({ commit, state }) => {

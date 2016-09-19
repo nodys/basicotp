@@ -1,16 +1,26 @@
 <template lang="html">
   <div id="app" :class="classes">
-    <div class="timeout" :style="progressStyle"></div>
+    <div class="timeout-back">
+      <div class="timeout" :style="progressStyle"></div>
+    </div>
+    <div class="emptylist" v-show="isEmpty">
+      Not keys. Yet.
+    </div>
     <div class="keylist">
       <div v-for="item in keys" class="keylist-item">
         <nv-key-item class="flex" :item="item"></nv-key-item>
       </div>
+    </div>
+    <div class="keyadd">
+      <input type="text" class="keyadd-input" v-model="newkey" placeholder="Enter a new 2FA key..." @keyup.enter="handleAddKey">
+      <div class="keyadd-button" @click="handleAddKey">+</div>
     </div>
   </div>
 </template>
 <script>
 import NvKeyItem from './KeyItem.vue'
 import { mapGetters, mapActions } from 'vuex'
+import { isValidKey } from '../api/utils.js'
 
 export default {
   data () {
@@ -20,14 +30,24 @@ export default {
       },
       classes: {
         outoftime: false
-      }
+      },
+      newkey: ''
     }
   },
   methods: {
-    ...mapActions(['startTimeRunner', 'loadKeys'])
+    ...mapActions(['startTimeRunner', 'loadKeys', 'addKey']),
+    handleAddKey (event) {
+      if (isValidKey(this.newkey)) {
+        this.addKey({ key: this.newkey })
+        this.newkey = ''
+      }
+    }
   },
   computed: {
-    ...mapGetters(['keys', 'timeout'])
+    ...mapGetters(['keys', 'timeout']),
+    isEmpty () {
+      return this.keys.length === 0
+    }
   },
   created () {
     this.loadKeys()
@@ -45,6 +65,62 @@ export default {
 }
 </script>
 <style lang="css">
+#app {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.emptylist {
+  font-size: 3rem;
+  color: #ccc;
+  padding: 3rem;
+  text-align: center;
+}
+
+.keylist {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.keyadd {
+  flex-shrink: 0;
+  background: #eee;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+
+.keyadd-input {
+  flex-grow: 1;
+  margin-right: 1rem;
+  font-family: Monaco, monospace;
+  outline: none;
+}
+
+.keyadd-button {
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  color: #aaa;
+  text-align: center;
+  border-radius: 2px;
+  transition: color 200ms ease-out;
+}
+
+.keyadd-button:hover {
+  color: #000,
+}
+
+.timeout-back {
+  background: #eee;
+}
+
 .timeout {
   background-color: #008abe;
   height: 5px;

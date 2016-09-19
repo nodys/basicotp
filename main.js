@@ -4,6 +4,14 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+const homeOrTmp = require('home-or-tmp')
+const path = require('path')
+const fs = require('fs-extra-promise')
+const co = require('bluebird-co').co
+const debounce = require('lodash.debounce')
+
+const BASICNOTP_FILEPATH = path.resolve(homeOrTmp, '.basicnotp')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -13,7 +21,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 300,
-    resizable: false,
+    resizable: true,
     alwaysOnTop: true
   })
 
@@ -58,3 +66,26 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const debounceSave = debounce(function (keys) {
+  fs.writeJsonAsync(BASICNOTP_FILEPATH, keys)
+    .catch((error) => {
+      console.warn('Unable to write %s (%s)', BASICNOTP_FILEPATH, error.message)
+    })
+}, 500)
+
+app.persistency = {
+  loadKeys: co.wrap(function * () {
+    let data
+    try {
+      data = yield fs.readJsonAsync(BASICNOTP_FILEPATH)
+    } catch (error) {
+      console.warn('Unable to read data file:' + BASICNOTP_FILEPATH)
+      data = []
+    }
+    return data
+  }),
+
+  saveKeys: co.wrap(function * (keys) {
+    debounceSave(keys)
+  })
+}

@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>Basic OTP</title>
     <link rel="stylesheet" href="./style.css">
+    <script>
+    try {
+      window.electronPersistency = require('electron').remote.app.persistency
+    } catch (ignore) {}
+    </script>
   </head>
   <body>
     <div id="app">
