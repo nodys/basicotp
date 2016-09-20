@@ -2,9 +2,6 @@
 
 import window from 'global/window'
 
-// const Menu = require('electron').remote.Menu
-// const services = require('nova-service')
-
 export default function initMenu (store) {
   if (!window.electron) {
     return {}
