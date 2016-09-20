@@ -77,6 +77,20 @@ export default {
 }
 </script>
 <style lang="css">
+html {
+  font-size: 14px;
+  font-family: Helvetica, sans-serif;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
 #app {
 }
 
