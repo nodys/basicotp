@@ -2,8 +2,9 @@
   "name": "basicnotp",
   "productName": "BasicNOTP",
   "version": "1.0.0",
-  "description": "A basic Electron app for 2FA oath",
+  "description": "A two-factor authentication application for one-time password based on time",
   "main": "./main.js",
+  "private": true,
   "scripts": {
     "dev": "mkdir -p build && npm-run-all --parallel dev-electron-pkg dev-statics dev-bundle",
     "dev-bundle": "mkdir -p build && watchify src/app/app.js --debug --cache-dir ./.cache --watch --verbose -p browserify-hmr -o build/app.js ",
@@ -75,5 +76,15 @@
       ]
     ]
   },
-  "private": true
+  "keywords": [
+    "vue",
+    "vuejs",
+    "electron",
+    "notp",
+    "totp",
+    "oauth",
+    "2fa",
+    "password",
+    "aes"
+  ]
 }
