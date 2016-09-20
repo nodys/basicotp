@@ -2,7 +2,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 
-var pkg = fs.readJsonSync(path.join(__dirname,'../package.json'))
+var pkg = fs.readJsonSync(path.join(__dirname, '../package.json'))
 
 delete pkg.scripts
 delete pkg.devDependencies
