@@ -3,7 +3,6 @@ import window from 'global/window'
 import debounce from 'lodash.debounce'
 
 const localStorage = window.localStorage
-const prompt = window.prompt
 
 // Default browser persistency
 var persistency = {

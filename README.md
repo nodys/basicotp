@@ -24,7 +24,7 @@ Clone this repository and run `npm install`
 
 - `npm run dev`: To build a developement version in the build folder
 - `npm run dev-start`: To start the developement version with electron
-- `npm run dev-serve`: To serve the developement version in a http server (see http://localhost:8080)
+- `npm run dev-serve`: To serve the developement version in a http server (see http://localhost:8080 - use localStorage without encryption !)
 - `npm run dist`: To build a packaged version
 
 See package.json scripts for details.
