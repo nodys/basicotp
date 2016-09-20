@@ -10,7 +10,8 @@ Vue.use(Vuex)
 
 const state = {
   timeout: 1,
-  keys: []
+  mainView: null,
+  keys: null
 }
 
 const store = new Vuex.Store({

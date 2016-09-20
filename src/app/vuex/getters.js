@@ -4,6 +4,12 @@ export const keys = (state) => {
 export const timeout = (state) => {
   return state.timeout
 }
+export const needSecret = (state) => {
+  return state.needSecret
+}
+export const mainView = (state) => {
+  return state.mainView
+}
 
 // export const timeoutInfos = (state) => {
 //   return {

@@ -1,13 +1,11 @@
-const co = require('bluebird-co').co
-const window = require('global/window')
+import { co } from 'bluebird-co'
+import window from 'global/window'
+import debounce from 'lodash.debounce'
+
 const localStorage = window.localStorage
-const debounce = require('lodash.debounce')
+const prompt = window.prompt
 
 // Default browser persistency
-var debounceSave = debounce(function (keys) {
-  localStorage.setItem('basicnotp-keys', JSON.stringify(keys))
-}, 500)
-
 var persistency = {
   loadKeys: co.wrap(function * () {
     let serialized = localStorage.getItem('basicnotp-keys') || '[]'
@@ -15,7 +13,7 @@ var persistency = {
   }),
 
   saveKeys: co.wrap(function * (keys) {
-    debounceSave(keys)
+    localStorage.setItem('basicnotp-keys', JSON.stringify(keys))
   })
 }
 
@@ -25,21 +23,28 @@ if (window.electronPersistency) {
 }
 
 // The actual client api:
-export function loadKeys () {
+export function loadKeys (secret) {
   return co(function * () {
-    let keys = yield persistency.loadKeys()
-    keys.map(item => item.code = '-')
+    let keys = yield persistency.loadKeys(secret)
     return keys
   })
 }
 
-export function saveKeys (keys) {
-  return co(function * () {
-    // Cleanup
-    let copy = keys.map((item) => {
-      return { key: item.key, label: item.label }
+var debounceSave = debounce(function (keys, secret) {
+  // Cleanup
+  let copy = keys.map((item) => {
+    return { key: item.key, label: item.label }
+  })
+  // Save
+  persistency
+    .saveKeys(copy, secret)
+    .catch(error => {
+      console.warn('Unable to save data!', error)
     })
-    // Save
-    persistency.saveKeys(copy)
+}, 500)
+
+export function saveKeys (keys, secret) {
+  return co(function * () {
+    debounceSave(keys, secret)
   })
 }

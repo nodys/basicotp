@@ -1,4 +1,5 @@
 export const ADD_KEY = 'ADD_KEY'
+export const SET_MAIN_VIEW = 'SET_MAIN_VIEW'
 export const UPDATE_ALL_KEYS = 'UPDATE_ALL_KEYS'
 export const UPDATE_CODES = 'UPDATE_CODES'
 export const UPDATE_TIMEOUT = 'UPDATE_TIMEOUT'

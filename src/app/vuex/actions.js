@@ -4,21 +4,54 @@ import * as utils from '../api/utils.js'
 
 let timeRunnerInterval = null
 
-export const loadKeys = ({ commit, state }) => {
-  return api.loadKeys().then((keys) => {
+let secret = null
+
+export const setSecret = (store, payload) => {
+  secret = payload.secret
+  if (store.state.keys) {
+    store.commit(Mut.SET_MAIN_VIEW, { mainView: 'running' })
+    if (store.state.keys.length) {
+      store.dispatch('saveKeys')
+    }
+  } else {
+    return store.dispatch('loadKeys')
+  }
+  // return store.dispatch('loadKeys')
+}
+
+export const defineSecret = (store, payload) => {
+  store.commit(Mut.SET_MAIN_VIEW, { mainView: 'define-secret' })
+}
+
+export const loadKeys = ({ commit, state }, payload = {}) => {
+  if (payload.secret) {
+    secret = payload.secret
+  }
+  // if (!secret) {
+  //   return commit(Mut.SET_MAIN_VIEW, { mainView: 'enter-secret' })
+  // }
+  return api.loadKeys(secret)
+  .then((keys) => {
     commit(Mut.UPDATE_ALL_KEYS, { keys })
-  })
-  .catch((error) => {
-    // TODO: Display error message...
-    console.error(error)
+    if (!keys.length) {
+      commit(Mut.SET_MAIN_VIEW, { mainView: 'define-secret' })
+    } else {
+      commit(Mut.SET_MAIN_VIEW, { mainView: 'running' })
+    }
+  }).catch((error) => {
+    console.warn('Unable to load keys', error)
+    commit(Mut.SET_MAIN_VIEW, { mainView: 'enter-secret' })
   })
 }
 
 export const saveKeys = ({ commit, state }) => {
-  return api.saveKeys([...state.keys])
+  if (!secret) {
+    return commit(Mut.SET_MAIN_VIEW, { mainView: 'enter-secret' })
+  }
+  return api.saveKeys([...state.keys], secret)
   .catch((error) => {
-    // TODO: Display error message...
-    console.error(error)
+    console.warn('Unable to save keys', error)
+    commit(Mut.SET_MAIN_VIEW, { mainView: 'enter-secret' })
   })
 }
 
@@ -52,6 +85,9 @@ export const deleteKey = (store, payload) => {
 
 export const updateCodes = ({ commit, state }) => {
   let hasChanges = false
+  if (!state.keys) {
+    return
+  }
   let keys = state.keys.map(item => {
     let code = utils.getCode(item.key)
     hasChanges = hasChanges || (item.code !== code)

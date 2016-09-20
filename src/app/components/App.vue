@@ -1,24 +1,34 @@
 <template lang="html">
   <div id="app" :class="classes">
-    <div class="timeout-back">
-      <div class="timeout" :style="progressStyle"></div>
+    <div v-if="mainView === 'define-secret'" class="fullbleed">
+      <nv-form-define-secret></nv-form-define-secret>
     </div>
-    <div class="emptylist" v-show="isEmpty">
-      Not keys. Yet.
+    <div v-if="mainView === 'enter-secret'" class="fullbleed">
+      <nv-form-secret></nv-form-secret>
     </div>
-    <div class="keylist">
-      <div v-for="item in keys" class="keylist-item">
-        <nv-key-item class="flex" :item="item"></nv-key-item>
+    <div v-if="mainView === 'running'" class="fullbleed">
+      <div class="timeout-back">
+        <div class="timeout" :style="progressStyle"></div>
       </div>
-    </div>
-    <div class="keyadd">
-      <input type="text" class="keyadd-input" v-model="newkey" placeholder="Enter a new 2FA key..." @keyup.enter="handleAddKey">
-      <div class="keyadd-button" @click="handleAddKey">+</div>
+      <div class="emptylist" v-show="isEmpty">
+        Not keys. Yet.
+      </div>
+      <div class="keylist">
+        <div v-for="item in keys" class="keylist-item">
+          <nv-key-item class="flex" :item="item"></nv-key-item>
+        </div>
+      </div>
+      <div class="keyadd">
+        <input type="text" class="keyadd-input" v-model="newkey" placeholder="Enter a new 2FA key..." @keyup.enter="handleAddKey">
+        <div class="keyadd-button" @click="handleAddKey">+</div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import NvKeyItem from './KeyItem.vue'
+import NvFormSecret from './FormSecret.vue'
+import NvFormDefineSecret from './FormDefineSecret.vue'
 import { mapGetters, mapActions } from 'vuex'
 import { isValidKey } from '../api/utils.js'
 
@@ -44,9 +54,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['keys', 'timeout']),
+    ...mapGetters(['keys', 'timeout', 'mainView']),
     isEmpty () {
-      return this.keys.length === 0
+      return !this.keys || this.keys.length === 0
     }
   },
   created () {
@@ -54,7 +64,9 @@ export default {
     this.startTimeRunner()
   },
   components: {
-    NvKeyItem
+    NvKeyItem,
+    NvFormSecret,
+    NvFormDefineSecret
   },
   watch: {
     timeout (timeout) {
@@ -66,6 +78,9 @@ export default {
 </script>
 <style lang="css">
 #app {
+}
+
+.fullbleed {
   position: fixed;
   width: 100%;
   height: 100vh;
