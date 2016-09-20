@@ -6,7 +6,7 @@ const crypto = require('crypto')
 const path = require('path')
 const homeOrTmp = require('home-or-tmp')
 
-const BASICNOTP_FILEPATH = path.resolve(homeOrTmp, '.basicnotp')
+const BASICOTP_FILEPATH = path.resolve(homeOrTmp, '.basicotp')
 
 function pDecrypt (data, secret) {
   data = data.trim()
@@ -28,12 +28,12 @@ function pEncrypt (data, secret) {
 
 const persistency = {
   loadKeys: co.wrap(function * (secret) {
-    let exists = yield fs.existsAsync(BASICNOTP_FILEPATH)
+    let exists = yield fs.existsAsync(BASICOTP_FILEPATH)
     if (!exists) {
       return []
     }
 
-    let encrypted = yield fs.readJsonAsync(BASICNOTP_FILEPATH, 'utf8')
+    let encrypted = yield fs.readJsonAsync(BASICOTP_FILEPATH, 'utf8')
 
     // Throw if invalid secret
     var decrypted = encrypted.map((entry) => {
@@ -51,7 +51,7 @@ const persistency = {
         key: pEncrypt(entry.key, secret)
       })
     })
-    fs.outputFileAsync(BASICNOTP_FILEPATH, JSON.stringify(encrypted, null, 2), 'utf8')
+    fs.outputFileAsync(BASICOTP_FILEPATH, JSON.stringify(encrypted, null, 2), 'utf8')
   })
 }
 

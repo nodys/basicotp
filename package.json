@@ -1,6 +1,6 @@
 {
-  "name": "basicnotp",
-  "productName": "BasicNOTP",
+  "name": "basicotp",
+  "productName": "BasicOTP",
   "version": "1.0.0",
   "description": "A two-factor authentication application for one-time password based on time",
   "main": "./main.js",
@@ -18,7 +18,7 @@
     "dist-statics": "mkdir -p dist && cpx './src/{index.html,main.js,lib/**/*}' ./dist",
     "dist-electron-pkg": "mkdir -p dist && node ./scripts/gen-electron-pkg.js > ./dist/package.json",
     "dist-install": "cd dist && npm install --production",
-    "dist-package": "electron-packager ./dist BasicNOTP --out releases --asar",
+    "dist-package": "electron-packager ./dist BasicOTP --out releases --asar",
     "dist-compress": "./scripts/compress-releases.sh",
     "standard": "standard \"**/*.{vue,js}\""
   },

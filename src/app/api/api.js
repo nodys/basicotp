@@ -7,12 +7,12 @@ const localStorage = window.localStorage
 // Default browser persistency
 var persistency = {
   loadKeys: co.wrap(function * () {
-    let serialized = localStorage.getItem('basicnotp-keys') || '[]'
+    let serialized = localStorage.getItem('basicotp-keys') || '[]'
     return JSON.parse(serialized)
   }),
 
   saveKeys: co.wrap(function * (keys) {
-    localStorage.setItem('basicnotp-keys', JSON.stringify(keys))
+    localStorage.setItem('basicotp-keys', JSON.stringify(keys))
   })
 }
 
