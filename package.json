@@ -60,9 +60,9 @@
     "thirty-two": "^1.0.2",
     "uglifyify": "^3.0.3",
     "uglifyjs": "^2.4.10",
-    "vue": "^2.0.0-rc.6",
+    "vue": "^2.0.3",
     "vueify": "^9.2.4",
-    "vuex": "^2.0.0-rc.5",
+    "vuex": "^2.0.0",
     "watchify": "^3.7.0"
   },
   "browserify": {
