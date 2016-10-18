@@ -45,5 +45,10 @@ export default {
 
   [Mut.SET_MAIN_VIEW]: (state, payload = {}) => {
     state.mainView = payload.mainView
+  },
+
+  [Mut.SET_CURRENT]: (state, payload = {}) => {
+    console.log('Set Current', payload.current)
+    state.current = payload.current
   }
 }

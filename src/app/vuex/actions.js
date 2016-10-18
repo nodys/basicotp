@@ -83,6 +83,18 @@ export const deleteKey = (store, payload) => {
   return saveKeys(store)
 }
 
+export const showQr = ({ commit, state }, payload) => {
+  let item = state.keys.find(key => key.key === payload.key)
+  if (!item) { return }
+  // Generate the QR Code, and mutate the view to show QR
+  commit(Mut.SET_CURRENT, { current: item })
+  commit(Mut.SET_MAIN_VIEW, { mainView: 'show-qr' })
+}
+
+export const leaveQr = ({ commit, state }, payload) => {
+  commit(Mut.SET_MAIN_VIEW, { mainView: 'running' })
+}
+
 export const updateCodes = ({ commit, state }) => {
   let hasChanges = false
   if (!state.keys) {

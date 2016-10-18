@@ -7,7 +7,10 @@
       <div class="code">{{item.code}}</div>
       <!-- <div class="key">{{item.key}}</div> -->
     </div>
-    <div class="remove-button" @click="handleRemove">
+    <div class="button" @click="handleQr">
+      ⚃
+    </div>
+    <div class="button" @click="handleRemove">
       ✕
     </div>
   </div>
@@ -25,13 +28,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deleteKey']),
+    ...mapActions(['deleteKey', 'showQr']),
     updateLabel (event) {
       const label = event.target.value.trim()
       this.$store.dispatch('updateKey', { key: this.item.key, label })
     },
     handleRemove (event) {
       this.deleteKey(this.item)
+    },
+    handleQr (event) {
+      this.showQr(this.item)
     }
   }
 }
@@ -83,19 +89,5 @@ export default {
   color: #999;
 }
 
-.remove-button {
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: .5rem;
-  font-size: 1.5rem;
-  color: #ccc;
-  text-align: center;
-  border-radius: 2px;
-  transition: color 200ms ease-out;
-}
-
-.remove-button:hover {
-  color: #000;
-}
 
 </style>

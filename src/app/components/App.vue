@@ -20,8 +20,11 @@
       </div>
       <div class="keyadd">
         <input type="text" class="keyadd-input" v-model="newkey" placeholder="Enter a new 2FA key..." @keyup.enter="handleAddKey">
-        <div class="keyadd-button" @click="handleAddKey">+</div>
+        <div class="button" @click="handleAddKey">+</div>
       </div>
+    </div>
+    <div v-if="mainView === 'show-qr'" class="fullbleed">
+      <nv-qr-code></nv-qr-code>
     </div>
   </div>
 </template>
@@ -29,6 +32,7 @@
 import NvKeyItem from './KeyItem.vue'
 import NvFormSecret from './FormSecret.vue'
 import NvFormDefineSecret from './FormDefineSecret.vue'
+import NvQrCode from './QrCode.vue'
 import { mapGetters, mapActions } from 'vuex'
 import { isValidKey } from '../api/utils.js'
 
@@ -66,7 +70,8 @@ export default {
   components: {
     NvKeyItem,
     NvFormSecret,
-    NvFormDefineSecret
+    NvFormDefineSecret,
+    NvQrCode
   },
   watch: {
     timeout (timeout) {
@@ -91,7 +96,19 @@ body {
   height: 100vh;
 }
 
-#app {
+.button {
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: .5rem;
+  font-size: 1.5rem;
+  color: #ccc;
+  text-align: center;
+  border-radius: 2px;
+  transition: color 200ms ease-out;
+}
+
+.button:hover {
+  color: #000,
 }
 
 .fullbleed {
@@ -131,7 +148,7 @@ body {
   font-family: Monaco, monospace;
   outline: none;
 }
-
+/*
 .keyadd-button {
   cursor: pointer;
   box-sizing: border-box;
@@ -144,7 +161,7 @@ body {
 
 .keyadd-button:hover {
   color: #000,
-}
+}*/
 
 .timeout-back {
   background: #eee;

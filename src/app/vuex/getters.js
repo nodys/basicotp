@@ -10,3 +10,6 @@ export const needSecret = (state) => {
 export const mainView = (state) => {
   return state.mainView
 }
+export const current = (state) => {
+  return state.current
+}

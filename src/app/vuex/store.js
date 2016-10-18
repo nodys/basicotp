@@ -11,7 +11,8 @@ Vue.use(Vuex)
 const state = {
   timeout: 1,
   mainView: null,
-  keys: null
+  keys: null,
+  current: null
 }
 
 const store = new Vuex.Store({
