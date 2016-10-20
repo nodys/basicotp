@@ -1,7 +1,7 @@
 {
   "name": "basicotp",
   "productName": "BasicOTP",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A two-factor authentication application for one-time password based on time",
   "main": "./main.js",
   "private": true,
