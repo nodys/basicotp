@@ -18,7 +18,7 @@
     "dist-statics": "mkdir -p dist && cpx './src/{index.html,main.js,lib/**/*}' ./dist",
     "dist-electron-pkg": "mkdir -p dist && node ./scripts/gen-electron-pkg.js > ./dist/package.json",
     "dist-install": "cd dist && npm install --production",
-    "dist-package": "electron-packager ./dist BasicOTP --out releases --asar",
+    "dist-package": "electron-packager ./dist BasicOTP --out releases --asar --platform=darwin,linux --arch=x64",
     "dist-compress": "./scripts/compress-releases.sh",
     "standard": "standard \"**/*.{vue,js}\""
   },
