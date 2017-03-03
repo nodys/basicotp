@@ -3,18 +3,18 @@
 import Vue from 'vue'
 import store from './vuex/store.js'
 import App from './components/App.vue'
-import domready from 'domready'
 import initMenu from './init-menu'
 
+// Initialize the electron's menu
 initMenu(store)
 
-// Bootstrap application
-domready(() => {
-  new Vue({ // eslint-disable-line no-new
-    el: '#app',
+function createApp () {
+  let app = new Vue({
     store,
     render: (h) => h(App)
   })
+  return app
+}
 
-  window.store = store
-})
+// Export an application builer
+export default createApp

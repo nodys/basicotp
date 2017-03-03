@@ -6,8 +6,17 @@ const crypto = require('crypto')
 const path = require('path')
 const homeOrTmp = require('home-or-tmp')
 
+// Where to find the configuration file (not configurable)
 const BASICOTP_FILEPATH = path.resolve(homeOrTmp, '.basicotp')
 
+/**
+ * Encrypt data with secret using aes256 cipher
+ *
+ * @param {string} data
+ * @param {string} secret
+ *
+ * @return {string}
+ */
 function pDecrypt (data, secret) {
   data = data.trim()
   var result = ''
@@ -17,6 +26,14 @@ function pDecrypt (data, secret) {
   return result
 }
 
+/**
+ * Decrypt data with secret using aes256 cipher
+ *
+ * @param {type} data
+ * @param {type} secret
+ *
+ * @return {type}
+ */
 function pEncrypt (data, secret) {
   data = data.trim()
   var result = ''
@@ -26,7 +43,13 @@ function pEncrypt (data, secret) {
   return result
 }
 
+/**
+ * Expose a simple api to persist data on the drive
+ */
 const persistency = {
+  /**
+   * Decrypt and load the keys using given secret
+   */
   loadKeys: co.wrap(function * (secret) {
     let exists = yield fs.existsAsync(BASICOTP_FILEPATH)
     if (!exists) {
@@ -45,6 +68,9 @@ const persistency = {
     return decrypted
   }),
 
+  /**
+   * Encrypt and save the keys using given secret
+   */
   saveKeys: co.wrap(function * (keys, secret) {
     let encrypted = keys.map((entry) => {
       return Object.assign({}, entry, {

@@ -16,7 +16,6 @@ export const setSecret = (store, payload) => {
   } else {
     return store.dispatch('loadKeys')
   }
-  // return store.dispatch('loadKeys')
 }
 
 export const defineSecret = (store, payload) => {
@@ -27,9 +26,6 @@ export const loadKeys = ({ commit, state }, payload = {}) => {
   if (payload.secret) {
     secret = payload.secret
   }
-  // if (!secret) {
-  //   return commit(Mut.SET_MAIN_VIEW, { mainView: 'enter-secret' })
-  // }
   return api.loadKeys(secret)
   .then((keys) => {
     commit(Mut.UPDATE_ALL_KEYS, { keys })

@@ -6,16 +6,21 @@
     <section>
       <img :src="qrCodeSrc" :alt="current.label">
       <div>{{current.label}}</div>
+      <div class="secret">{{current.key | formatKey}}</div>
     </section>
   </div>
 </template>
+
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import qr from 'qr-image'
 export default {
-  // Data
-  // data () { return {} },
-  // props: { label: { type: String, required: true }}
+  filters: {
+    formatKey (key) {
+      return key.toUpperCase().match(/.{4}/g).join('-')
+    }
+  },
+
   computed: {
     ...mapGetters(['current']),
     qrCodeSrc () {
@@ -27,51 +32,38 @@ export default {
     }
   },
 
-  // Methods
   methods: {
     ...mapActions(['leaveQr'])
-  },
-
-  watch: {},
-
-  // Life Cycle
-  // beforeCreate () {},
-  // created () {},
-  // beforeDestroy () {},
-  // destroyed () {},
-  // beforeMount () {},
-  // mounted () {},
-  // beforeUpdate () {},
-  // updated () {},
-  // activated () {},
-  // deactivated () {},
-
-  // Assets
-  directives: {},
-  transitions: {},
-  filters: {},
-  components: {}
+  }
 }
 </script>
-<style lang="css" scoped>
+
+<style lang="stylus" scoped>
 .qr-code {
-  display: flex;
-  flex-direction: column;
+  display: flex
+  flex-direction: column
 }
+
 .qr-code header {
-  padding: .5rem;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: flex-end;
+  padding: .5rem
+  flex-shrink: 0
+  display: flex
+  justify-content: flex-end
 }
 
 .qr-code section {
-  padding: .5rem;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  padding: .5rem
+  flex-grow: 1
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+}
+
+.secret {
+  font-size: .7rem
+  color: #666
+  font-family: Monaco, monospace
 }
 
 </style>

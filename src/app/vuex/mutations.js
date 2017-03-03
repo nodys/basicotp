@@ -48,7 +48,6 @@ export default {
   },
 
   [Mut.SET_CURRENT]: (state, payload = {}) => {
-    console.log('Set Current', payload.current)
     state.current = payload.current
   }
 }

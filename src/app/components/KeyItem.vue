@@ -5,7 +5,6 @@
         <input class="label-input" type="text" v-model="label" @input="updateLabel">
       </div>
       <div class="code">{{item.code}}</div>
-      <!-- <div class="key">{{item.key}}</div> -->
     </div>
     <div class="button" @click="handleQr">
       ⚃
@@ -15,6 +14,8 @@
     </div>
   </div>
 </template>
+
+
 <script>
 import { mapActions } from 'vuex'
 export default {
@@ -42,52 +43,50 @@ export default {
   }
 }
 </script>
-<style lang="css" scoped>
 
+<style lang="stylus" scoped>
 .item {
-  display: flex;
-  flex-direction: horizontal;
-  align-items: center;
-  padding: .5rem;
+  display: flex
+  flex-direction: horizontal
+  align-items: center
+  padding: .5rem
 }
 
 .item > .flex {
-  flex-grow: 1;
+  flex-grow: 1
 }
 
 .label {
-  text-align: center;
+  text-align: center
 }
 
 .label-input {
-  text-align: center;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  font-size: inherit;
-  background: none;
-  border: 0;
-  outline: none;
-  font-family: inherit;
+  text-align: center
+  width: 100%
+  padding: 0
+  margin: 0
+  font-size: inherit
+  background: none
+  border: 0
+  outline: none
+  font-family: inherit
 }
 
 .code {
-  text-align: center;
-  font-family: monospace;
-  font-size: 2rem;
-  box-sizing: border-box;
-  min-height: 2rem;
+  text-align: center
+  font-family: monospace
+  font-size: 2rem
+  box-sizing: border-box
+  min-height: 2rem
 }
 
 .key {
-  text-align: center;
-  font-family: Monaco, monospace;
-  font-size: 0.7rem;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  color: #999;
+  text-align: center
+  font-family: Monaco, monospace
+  font-size: 0.7rem
+  display: block
+  width: 100%
+  box-sizing: border-box
+  color: #999
 }
-
-
 </style>

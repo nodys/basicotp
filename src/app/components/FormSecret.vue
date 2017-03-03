@@ -8,6 +8,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data () {
@@ -23,34 +24,17 @@ export default {
   }
 }
 </script>
-<style lang="css" scoped>
+
+<style lang="stylus" scoped>
 .host {
-  padding: 2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 2rem
+  text-align: center
+  display: flex
+  flex-direction: column
+  align-items: center
 }
 
 .host > * {
-  margin: .5rem 0;
+  margin: .5rem 0
 }
-
-h1 {
-  font-weight: normal;
-  font-size: 1.3rem;
-}
-
-p {
-  color: #666;
-  font-size: .9rem;
-}
-
-input {
-  padding: .5rem;
-  display: block;
-  width: 100%;
-}
-
-
 </style>

@@ -3,9 +3,11 @@
     <div v-if="mainView === 'define-secret'" class="fullbleed">
       <nv-form-define-secret></nv-form-define-secret>
     </div>
+
     <div v-if="mainView === 'enter-secret'" class="fullbleed">
       <nv-form-secret></nv-form-secret>
     </div>
+
     <div v-if="mainView === 'running'" class="fullbleed">
       <div class="timeout-back">
         <div class="timeout" :style="progressStyle"></div>
@@ -23,11 +25,13 @@
         <div class="button" @click="handleAddKey">+</div>
       </div>
     </div>
+
     <div v-if="mainView === 'show-qr'" class="fullbleed">
       <nv-qr-code></nv-qr-code>
     </div>
   </div>
 </template>
+
 <script>
 import NvKeyItem from './KeyItem.vue'
 import NvFormSecret from './FormSecret.vue'
@@ -81,111 +85,7 @@ export default {
   }
 }
 </script>
-<style lang="css">
-html {
-  font-size: 14px;
-  font-family: Helvetica, sans-serif;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-}
 
-body {
-  padding: 0;
-  margin: 0;
-  height: 100vh;
-}
-
-.button {
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: .5rem;
-  font-size: 1.5rem;
-  color: #ccc;
-  text-align: center;
-  border-radius: 2px;
-  transition: color 200ms ease-out;
-}
-
-.button:hover {
-  color: #000,
-}
-
-.fullbleed {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.emptylist {
-  font-size: 3rem;
-  color: #ccc;
-  padding: 3rem;
-  text-align: center;
-}
-
-.keylist {
-  flex-grow: 1;
-  overflow: auto;
-}
-
-.keyadd {
-  flex-shrink: 0;
-  background: #eee;
-  padding: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-top: 1px solid #ccc;
-}
-
-.keyadd-input {
-  flex-grow: 1;
-  margin-right: 1rem;
-  font-family: Monaco, monospace;
-  outline: none;
-}
-/*
-.keyadd-button {
-  cursor: pointer;
-  box-sizing: border-box;
-  font-size: 1.5rem;
-  color: #aaa;
-  text-align: center;
-  border-radius: 2px;
-  transition: color 200ms ease-out;
-}
-
-.keyadd-button:hover {
-  color: #000,
-}*/
-
-.timeout-back {
-  background: #eee;
-}
-
-.timeout {
-  background-color: #008abe;
-  height: 5px;
-  transition: background-color 5s ease-in-out, width 500ms ease-out;
-}
-
-.outoftime .timeout {
-  background-color: #be0000;
-}
-
-.outoftime .nv-key-item .code {
-  color: #ccc
-}
-
-.keylist-item {
-  border-bottom: 1px solid #ccc;
-}
-
-
-
-
+<style lang="stylus">
+@import '../styles/index.styl'
 </style>
