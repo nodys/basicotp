@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="host">
+    <img class="basicotp-logo" src="img/basicotp-logo.svg" alt="Logo Basic Otp">
     <h1>Please define your main password</h1>
     <p>In order to encrypt and decrypt your password file, please defined your main password.</p>
     <input type="password" @keyup.enter="submit" v-model="secret">
